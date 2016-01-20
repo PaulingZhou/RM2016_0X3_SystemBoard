@@ -30,3 +30,9 @@
 
 # Debug files
 *.dSYM/
+
+#Output files
+MDK-ARM/RM2016_0X3_SystemBoard Configuration
+
+#Listing files
+MDK-ARM/Listing
