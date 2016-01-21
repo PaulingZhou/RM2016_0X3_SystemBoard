@@ -60,6 +60,7 @@ void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __GPIOA_CLK_ENABLE();
   __GPIOD_CLK_ENABLE();
+  __GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin : PA0 */
   GPIO_InitStruct.Pin = GPIO_PIN_0;

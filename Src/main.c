@@ -32,17 +32,22 @@
   */
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
+#include "i2c.h"
+#include "spi.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
 #include "system.h"
+#include "stm32f4_discovery.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+uint8_t dataSend[10],dataReceive[10],count;
+__IO ITStatus UartReady = RESET;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -61,7 +66,11 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+	//data initiation
+	for(count=0;count<10;count++)
+	{
+		dataSend[count] = count;
+	}
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -74,12 +83,12 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-
+  MX_I2C1_Init();
+  MX_SPI1_Init();
+  MX_USART1_UART_Init();
+	if(HAL_UART_Receive_IT(&huart1, dataReceive, 1)==HAL_OK)LED3_High;
   /* USER CODE BEGIN 2 */
-//	LED4_High;
-//	LED3_High;
-//	LED5_High;
-//	LED6_High;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -87,13 +96,11 @@ int main(void)
   while (1)
   {
   /* USER CODE END WHILE */
-		LED3_Toggle;
-		LED4_Toggle;
-		LED5_Toggle;
-		LED6_Toggle;
-		Delay(0x0FFFFF);
-  /* USER CODE BEGIN 3 */
 
+  /* USER CODE BEGIN 3 */
+//		HAL_UART_Transmit(&huart1,dataSend,10,0xFFFF);
+//		Delay(0xFFFFF);
+//		HAL_UART_RxCpltCallback(&huart1);
   }
   /* USER CODE END 3 */
 
@@ -125,6 +132,11 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
+{
+	HAL_UART_Transmit(UartHandle,dataReceive,1,0xFFFF);
+	if(HAL_UART_Receive_IT(&huart1, dataReceive, 1)==HAL_OK)LED3_High;
+}
 
 /* USER CODE END 4 */
 
