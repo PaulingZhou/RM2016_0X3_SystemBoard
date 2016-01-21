@@ -1,7 +1,8 @@
 /**
   ******************************************************************************
-  * @file    stm32f4xx_it.c
-  * @brief   Interrupt Service Routines.
+  * File Name          : TIM.c
+  * Description        : This file provides code for the configuration
+  *                      of the TIM instances.
   ******************************************************************************
   *
   * COPYRIGHT(c) 2016 STMicroelectronics
@@ -30,74 +31,89 @@
   *
   ******************************************************************************
   */
+
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
-#include "stm32f4xx.h"
-#include "stm32f4xx_it.h"
+#include "tim.h"
 
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
 
-/* External variables --------------------------------------------------------*/
-extern SPI_HandleTypeDef hspi1;
-extern UART_HandleTypeDef huart1;
+TIM_HandleTypeDef htim1;
 
-/******************************************************************************/
-/*            Cortex-M4 Processor Interruption and Exception Handlers         */ 
-/******************************************************************************/
-
-/**
-* @brief This function handles System tick timer.
-*/
-void SysTick_Handler(void)
+/* TIM1 init function */
+void MX_TIM1_Init(void)
 {
-  /* USER CODE BEGIN SysTick_IRQn 0 */
+  TIM_ClockConfigTypeDef sClockSourceConfig;
+  TIM_MasterConfigTypeDef sMasterConfig;
 
-  /* USER CODE END SysTick_IRQn 0 */
-  HAL_IncTick();
-  HAL_SYSTICK_IRQHandler();
-  /* USER CODE BEGIN SysTick_IRQn 1 */
+  htim1.Instance = TIM1;
+  htim1.Init.Prescaler = 100;
+  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim1.Init.Period = 50000;
+  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim1.Init.RepetitionCounter = 0;
+  HAL_TIM_Base_Init(&htim1);
 
-  /* USER CODE END SysTick_IRQn 1 */
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig);
+
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig);
+
 }
 
-/******************************************************************************/
-/* STM32F4xx Peripheral Interrupt Handlers                                    */
-/* Add here the Interrupt Handlers for the used peripherals.                  */
-/* For the available peripheral interrupt handler names,                      */
-/* please refer to the startup file (startup_stm32f4xx.s).                    */
-/******************************************************************************/
-
-/**
-* @brief This function handles SPI1 global interrupt.
-*/
-void SPI1_IRQHandler(void)
+void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
 {
-  /* USER CODE BEGIN SPI1_IRQn 0 */
 
-  /* USER CODE END SPI1_IRQn 0 */
-  HAL_SPI_IRQHandler(&hspi1);
-  /* USER CODE BEGIN SPI1_IRQn 1 */
+  if(htim_base->Instance==TIM1)
+  {
+  /* USER CODE BEGIN TIM1_MspInit 0 */
 
-  /* USER CODE END SPI1_IRQn 1 */
+  /* USER CODE END TIM1_MspInit 0 */
+    /* Peripheral clock enable */
+    __TIM1_CLK_ENABLE();
+
+    /* Peripheral interrupt init*/
+    HAL_NVIC_SetPriority(TIM1_TRG_COM_TIM11_IRQn, 2, 0);
+    HAL_NVIC_EnableIRQ(TIM1_TRG_COM_TIM11_IRQn);
+  /* USER CODE BEGIN TIM1_MspInit 1 */
+
+  /* USER CODE END TIM1_MspInit 1 */
+  }
 }
 
-/**
-* @brief This function handles USART1 global interrupt.
-*/
-void USART1_IRQHandler(void)
+void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
 {
-  /* USER CODE BEGIN USART1_IRQn 0 */
 
-  /* USER CODE END USART1_IRQn 0 */
-  HAL_UART_IRQHandler(&huart1);
-  /* USER CODE BEGIN USART1_IRQn 1 */
+  if(htim_base->Instance==TIM1)
+  {
+  /* USER CODE BEGIN TIM1_MspDeInit 0 */
 
-  /* USER CODE END USART1_IRQn 1 */
-}
+  /* USER CODE END TIM1_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __TIM1_CLK_DISABLE();
+
+    /* Peripheral interrupt Deinit*/
+    HAL_NVIC_DisableIRQ(TIM1_TRG_COM_TIM11_IRQn);
+
+  }
+  /* USER CODE BEGIN TIM1_MspDeInit 1 */
+
+  /* USER CODE END TIM1_MspDeInit 1 */
+} 
 
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -1,0 +1,9 @@
+#include <stdlib.h> 
+#include <stdio.h>
+#include "mpu9255.h"
+#include "spi.h"
+#include "system.h"
+
+uint8_t MPU9255_Init(void){
+	
+}

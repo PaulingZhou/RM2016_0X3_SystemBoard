@@ -37,18 +37,18 @@
 #include "stm32f4xx_hal.h"
 #include "gpio.h"
 
-#define LED4_High 			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);
-#define LED4_Low 				HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);
-#define LED4_Toggle			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
-#define LED3_High 			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
-#define LED3_Low 				HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
-#define LED3_Toggle			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
-#define LED5_High 			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET);
-#define LED5_Low 				HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_RESET);
-#define LED5_Toggle			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
-#define LED6_High 			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET);
-#define LED6_Low 				HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_RESET);
-#define LED6_Toggle			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_15);
+#define LED4_High 			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET)
+#define LED4_Low 				HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET)
+#define LED4_Toggle			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12)
+#define LED3_High 			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET)
+#define LED3_Low 				HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET)
+#define LED3_Toggle			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13)
+#define LED5_High 			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET)
+#define LED5_Low 				HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_RESET)
+#define LED5_Toggle			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14)
+#define LED6_High 			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET)
+#define LED6_Low 				HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_RESET)
+#define LED6_Toggle			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_15)
 
 void Delay(uint32_t Time);
 void Error_Handler(void);
