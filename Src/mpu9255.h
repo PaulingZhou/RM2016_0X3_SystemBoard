@@ -98,4 +98,6 @@ typedef struct{
 uint8_t MPU9255_Init(void);
 uint8_t MPU9255_Read_Reg(uint8_t reg);
 uint8_t MPU9255_Write_Reg(uint8_t reg,uint8_t value);
-void MPU9255_ReadValue(uint8_t *dataPointer);
+uint8_t MPU9255_ReadValue(void);
+
+extern uint8_t MPU9255_DataBuffer[14];

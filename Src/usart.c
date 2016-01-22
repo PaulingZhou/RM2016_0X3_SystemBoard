@@ -84,7 +84,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
     /* Peripheral interrupt init*/
-    HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(USART1_IRQn, 2, 0);
     HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* USER CODE BEGIN USART1_MspInit 1 */
 
@@ -119,6 +119,40 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
 } 
 
 /* USER CODE BEGIN 1 */
+uint8_t frameConstruct(uint8_t *framePointer,uint8_t *dataPointer, uint8_t length, uint8_t command)
+{
+	uint8_t checksum = 0;
+	//frame head
+	*framePointer = 0xAA;
+	framePointer++;
+	*framePointer = 0xBB;
+	framePointer++;
+	//source address
+	*framePointer = 0xFF;
+	framePointer++;
+	//target address
+	*framePointer = 0xFF;
+	framePointer++;
+	//length
+	*framePointer = length+2;
+	checksum^=*framePointer;
+	framePointer++;
+	//command
+	*framePointer = command;
+	checksum^=*framePointer;
+	framePointer++;
+	//data
+	for(uint8_t i=0;i<length;i++)
+	{
+		*framePointer = *dataPointer;
+		checksum^=*framePointer;
+		framePointer++;
+		dataPointer++;
+	}
+	//checksum
+	*framePointer=checksum;
+	return (length+7);
+}
 
 /* USER CODE END 1 */
 

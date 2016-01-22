@@ -48,13 +48,16 @@
 extern UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN Private defines */
-
+// command define
+#define command_MPU9255 					0x00
+#define command_EC60 							0x01
+#define command_HG900							0x02
 /* USER CODE END Private defines */
 
 void MX_USART1_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+uint8_t frameConstruct(uint8_t *framePointer,uint8_t *dataPointer, uint8_t length, uint8_t command);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

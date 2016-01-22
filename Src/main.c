@@ -34,6 +34,7 @@
 #include "stm32f4xx_hal.h"
 #include "i2c.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -47,7 +48,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-uint8_t dataSend[14],dataReceive[10],count=0xAA;
+//uint8_t dataSend[14],dataReceive[10],count=0xAA;
 __IO ITStatus UartReady = RESET;
 /* USER CODE END PV */
 
@@ -82,10 +83,12 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   MX_SPI1_Init();
+  MX_TIM2_Init();
   MX_USART1_UART_Init();
 
   /* USER CODE BEGIN 2 */
 	if(MPU9255_Init())LED6_High;
+	if(HAL_TIM_Base_Start_IT(&htim2))LED5_High;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -95,10 +98,10 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-		MPU9255_ReadValue(dataSend);
-		HAL_UART_Transmit(&huart1, dataSend, 14, 0xFFFF);
-		HAL_UART_Transmit(&huart1, &count, 1, 0xFFFF);
-		Delay(0xFFFFFF);
+//		MPU9255_ReadValue(dataSend);
+//		HAL_UART_Transmit(&huart1, dataSend, 14, 0xFFFF);
+//		HAL_UART_Transmit(&huart1, &count, 1, 0xFFFF);
+//		Delay(0xFFFFF);
 //		HAL_SPI_Transmit(&hspi1, dataSend, 1, 0xFFFF);
 		
 //		SPI_MPU9255_CS_H;
@@ -141,12 +144,18 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
 {
-	HAL_UART_Transmit(UartHandle,dataReceive,1,0xFFFF);
-	if(HAL_UART_Receive_IT(&huart1, dataReceive, 1)==HAL_OK)LED3_High;
+//	HAL_UART_Transmit(UartHandle,dataReceive,1,0xFFFF);
+//	if(HAL_UART_Receive_IT(&huart1, dataReceive, 1)==HAL_OK)LED3_High;
 }
 
 void HAL_SYSTICK_Callback(void)
 {
+//	if(MPU9255_Init())
+//		{
+//			MPU9255_ReadValue(dataSend);
+//			HAL_UART_Transmit(&huart1, dataSend, 2, 0xFFFF);
+//			HAL_UART_Transmit(&huart1, &count, 1, 0xFFFF);
+//		}
 	//系统时钟中断 10ms进一次
 }
 

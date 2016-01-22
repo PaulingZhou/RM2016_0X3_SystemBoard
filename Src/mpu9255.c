@@ -4,7 +4,7 @@
 #include "spi.h"
 #include "system.h"
 
-uint8_t txData,rxData;
+uint8_t MPU9255_DataBuffer[14];
 
 uint8_t MPU9255_Init(void){
 	if(MPU9255_Read_Reg(WHO_AM_I)==0x73)
@@ -54,16 +54,12 @@ uint8_t MPU9255_Read_Reg(uint8_t reg)
 }
 
 //SPI读MPU9255数据
-void MPU9255_ReadValue(uint8_t *dataPointer)
+uint8_t MPU9255_ReadValue(void)
 {
-	uint8_t i,data=ACCEL_XOUT_H|0x80;
+	uint8_t data=ACCEL_XOUT_H|0x80;
 	SPI_MPU9255_CS_L;  //使能SPI传输
 	HAL_SPI_Transmit(&hspi1, &data, 1, 0xFFFF);
-//	for(i=0;i<14;i++)//一共读取14字节的数据
-//	{
-	HAL_SPI_Receive(&hspi1, dataPointer, 14, 0xFFFF); //循环读取
-//		dataPointer = dataPointer+1;
-//	}
+	HAL_SPI_Receive(&hspi1, MPU9255_DataBuffer, 14, 0xFFFF); //共读取14字节数据
 //	//加速度计
 //	MPU9250_ACC_LAST.X = ((int16_t)(*MPU9250_buf)[0]<<8) | (*MPU9250_buf)[1];
 //	MPU9250_ACC_LAST.Y = ((int16_t)(*MPU9250_buf)[2]<<8) | (*MPU9250_buf)[3];
@@ -74,5 +70,6 @@ void MPU9255_ReadValue(uint8_t *dataPointer)
 //	MPU9250_GYRO_LAST.X = ((int16_t)(*MPU9250_buf)[8]<<8) | (*MPU9250_buf)[9];
 //	MPU9250_GYRO_LAST.Y = ((int16_t)(*MPU9250_buf)[10]<<8) | (*MPU9250_buf)[11];
 //	MPU9250_GYRO_LAST.Z = ((int16_t)(*MPU9250_buf)[12]<<8) | (*MPU9250_buf)[13];
-	SPI_MPU9255_CS_H;  //禁止MPU9250
+	SPI_MPU9255_CS_H;  //禁止MPU9255
+	return 14;
 }
