@@ -50,9 +50,9 @@ void MX_TIM2_Init(void)
   TIM_MasterConfigTypeDef sMasterConfig;
 
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 100;
+  htim2.Init.Prescaler = 5;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 50000;
+  htim2.Init.Period = 200;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   HAL_TIM_Base_Init(&htim2);
 
@@ -108,7 +108,7 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
 /* USER CODE BEGIN 1 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	uint8_t dataSend[14],count=0xAA;
+	uint8_t frameConstruction[30],dataLength,frameLength;
 	if(htim->Instance == TIM2)
 	{
 		static uint16_t s_tim2_cnt = 0;
@@ -118,9 +118,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		{
 			s_tim2_cnt =0;
 			LED4_Toggle;
-			MPU9255_ReadValue(dataSend);
-			HAL_UART_Transmit(&huart1, dataSend, 14, 0xFFFF);
-			HAL_UART_Transmit(&huart1, &count, 1, 0xFFFF);
+			dataLength = MPU9255_ReadValue();
+			frameLength = frameConstruct(frameConstruction,MPU9255_DataBuffer, dataLength,command_MPU9255);
+			HAL_UART_Transmit(&huart1, frameConstruction, frameLength, 0xFFFF);
+//			HAL_UART_Transmit(&huart1, dataSend, 14, 0xFFFF);
+//			HAL_UART_Transmit(&huart1, &count, 1, 0xFFFF);
 
 		}
 		else s_tim2_cnt++;

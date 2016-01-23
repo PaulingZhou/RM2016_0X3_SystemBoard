@@ -37,6 +37,7 @@ uint8_t MPU9255_Write_Reg(uint8_t reg,uint8_t value)
 	status = HAL_SPI_Transmit(&hspi1, &reg, 1, 0xFFFF);
 	HAL_SPI_Transmit(&hspi1, &value, 1, 0xFFFF);
 	SPI_MPU9255_CS_H;										  	//½ûÖ¹MPU9255
+	Delay(0xFFF);
 	return(status);													//·µ»Ø×´Ì¬Öµ
 }
 
@@ -50,6 +51,7 @@ uint8_t MPU9255_Read_Reg(uint8_t reg)
 	HAL_SPI_Transmit(&hspi1, &reg, 1, 0xFFFF);	 	//·¢ËÍ¶ÁÃüÁî+¼Ä´æÆ÷ºÅ
  	HAL_SPI_Receive(&hspi1, &reg_val, 1, 0xFFFF);				//¶ÁÈ¡¼Ä´æÆ÷Öµ
 	SPI_MPU9255_CS_H;																//½ûÖ¹SPI´«Êä
+	Delay(0xFFF);
 	return(reg_val);
 }
 

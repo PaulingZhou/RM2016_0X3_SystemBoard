@@ -87,8 +87,9 @@ int main(void)
   MX_USART1_UART_Init();
 
   /* USER CODE BEGIN 2 */
-	if(MPU9255_Init())LED6_High;
-	if(HAL_TIM_Base_Start_IT(&htim2))LED5_High;
+	while(!MPU9255_Init())MPU9255_Init();
+	LED5_High;
+	if(HAL_TIM_Base_Start_IT(&htim2)==HAL_OK)LED6_High;
   /* USER CODE END 2 */
 
   /* Infinite loop */
