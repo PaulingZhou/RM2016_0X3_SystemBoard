@@ -50,9 +50,9 @@ void MX_TIM2_Init(void)
   TIM_MasterConfigTypeDef sMasterConfig;
 
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 5;
+  htim2.Init.Prescaler = 1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 10000;
+  htim2.Init.Period = 1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   HAL_TIM_Base_Init(&htim2);
 
@@ -113,7 +113,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	{
 		static uint16_t s_tim2_cnt = 0;
 
-		dataLength = MPU9255_ReadValue();
+		dataLength = MPU9255_ReadValue(1);
 		frameLength = frameConstruct(frameConstruction,MPU9255_DataBuffer, dataLength,command_MPU9255);
 		HAL_UART_Transmit(&huart1, frameConstruction, frameLength, 0xFFFF);
 		//5times TIM@ overflow equals 250ms

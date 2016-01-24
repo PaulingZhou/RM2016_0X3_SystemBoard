@@ -4,10 +4,14 @@ typedef struct{
 				int16_t X;
 				int16_t Y;
 				int16_t Z;}S_INT16_XYZ;
-//extern S_INT16_XYZ MPU9250_ACC_LAST;
-//extern S_INT16_XYZ MPU9250_GYRO_LAST;
-//extern S_INT16_XYZ MPU9250_MAG_LAST;
-//extern int16_t MPU9250_TEMP_LAST;
+typedef struct{
+				int32_t X;
+				int32_t Y;
+				int32_t Z;}S_INT32_XYZ;
+extern S_INT16_XYZ MPU9255_ACC_LAST;
+extern S_INT16_XYZ MPU9255_GYRO_LAST;
+extern S_INT16_XYZ MPU9255_MAG_LAST;
+extern int16_t MPU9255_TEMP_LAST;
 
 //寄存器定义
 #define SELF_TEST_X_GYRO		0X00
@@ -95,9 +99,9 @@ typedef struct{
 #define SPI_MPU9255_CS_H           HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET)
 #define SPI_MPU9255_CS_L           HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET)
 
-uint8_t MPU9255_Init(void);
+uint8_t MPU9255_Init(void);			
 uint8_t MPU9255_Read_Reg(uint8_t reg);
 uint8_t MPU9255_Write_Reg(uint8_t reg,uint8_t value);
-uint8_t MPU9255_ReadValue(void);
+uint8_t MPU9255_ReadValue(uint8_t status);			//status分初始化与测量两种状态,0-->init;1-->measure
 
 extern uint8_t MPU9255_DataBuffer[14];

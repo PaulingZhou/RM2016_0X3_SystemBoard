@@ -197,17 +197,37 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>count</ItemText>
+          <ItemText>MPU9250_ACC_LAST.X</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>dataSend[1]</ItemText>
+          <ItemText>MPU9250_ACC_LAST.Y</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>dataSend[2]</ItemText>
+          <ItemText>MPU9250_ACC_LAST.Z</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>MPU9250_TEMP_LAST</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>MPU9250_GYRO_LAST.X</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>MPU9250_GYRO_LAST.Y</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>MPU9250_GYRO_LAST.Z</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
