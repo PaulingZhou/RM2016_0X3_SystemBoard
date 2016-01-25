@@ -56,7 +56,7 @@ uint8_t MPU9255_Write_Reg(uint8_t reg,uint8_t value)
 	uint8_t status;
 	SPI_MPU9255_CS_L;											  //使能SPI传输
 	status = HAL_SPI_Transmit(&hspi1, &reg, 1, 0xFFFF);
-	HAL_SPI_Transmit(&hspi1, &value, 1, 0xFFFF);
+	status = HAL_SPI_Transmit(&hspi1, &value, 1, 0xFFFF);
 	SPI_MPU9255_CS_H;										  	//禁止MPU9255
 	Delay(0xFFF);
 	return(status);													//返回状态值

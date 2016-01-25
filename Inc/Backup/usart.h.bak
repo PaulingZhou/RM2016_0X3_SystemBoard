@@ -57,6 +57,7 @@ extern UART_HandleTypeDef huart1;
 void MX_USART1_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
+extern uint8_t dataReceive[30];
 uint8_t frameConstruct(uint8_t *framePointer,uint8_t *dataPointer, uint8_t length, uint8_t command);
 /* USER CODE END Prototypes */
 

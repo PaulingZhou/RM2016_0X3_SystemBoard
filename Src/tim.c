@@ -50,9 +50,9 @@ void MX_TIM2_Init(void)
   TIM_MasterConfigTypeDef sMasterConfig;
 
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 16;
+  htim2.Init.Prescaler = 8350;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 16;
+  htim2.Init.Period = 500;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   HAL_TIM_Base_Init(&htim2);
 
@@ -111,18 +111,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	uint8_t frameConstruction[30],dataLength,frameLength;
 	if(htim->Instance == TIM2)
 	{
-		static uint16_t s_tim2_cnt = 0;
-
 		dataLength = MPU9255_ReadValue(1);
 		frameLength = frameConstruct(frameConstruction,MPU9255_DataBuffer, dataLength,command_MPU9255);
 		HAL_UART_Transmit(&huart1, frameConstruction, frameLength, 0xFFFF);
-		//5times TIM@ overflow equals 250ms
-		if(s_tim2_cnt == 5)
-		{
-			s_tim2_cnt =0;
-			LED4_Toggle;
-		}
-		else s_tim2_cnt++;
+		LED4_Toggle;
 	}
 }
 /* USER CODE END 1 */

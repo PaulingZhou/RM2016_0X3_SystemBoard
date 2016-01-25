@@ -39,6 +39,7 @@
 
 /* USER CODE BEGIN 0 */
 #include "system.h"
+uint8_t dataReceive[30];
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -152,6 +153,12 @@ uint8_t frameConstruct(uint8_t *framePointer,uint8_t *dataPointer, uint8_t lengt
 	//checksum
 	*framePointer=checksum;
 	return (length+7);
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
+{
+	HAL_UART_Transmit(UartHandle,dataReceive,1,0xFFFF);
+	if(HAL_UART_Receive_IT(&huart1, dataReceive, 1)==HAL_OK)LED3_Toggle;
 }
 
 /* USER CODE END 1 */

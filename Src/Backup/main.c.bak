@@ -87,9 +87,9 @@ int main(void)
   MX_USART1_UART_Init();
 
   /* USER CODE BEGIN 2 */
-//	while(!MPU9255_Init());
-//	LED5_High;
-//	if(HAL_TIM_Base_Start_IT(&htim2)==HAL_OK)LED6_High;
+	if(MPU9255_Init())LED5_High;
+	if(HAL_TIM_Base_Start_IT(&htim2)==HAL_OK)LED4_High;
+	if(HAL_UART_Receive_IT(&huart1, dataReceive, 1)==HAL_OK)LED3_Toggle;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -99,9 +99,9 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-		if(MPU9255_Read_Reg(WHO_AM_I)==0x73)
-			LED3_Toggle;
-		Delay(0xFFFFF);
+//		if(MPU9255_Read_Reg(WHO_AM_I)==0x73)
+//			LED3_Toggle;
+//		Delay(0xFFFFF);
 //		MPU9255_ReadValue(dataSend);
 //		HAL_UART_Transmit(&huart1, dataSend, 14, 0xFFFF);
 //		HAL_UART_Transmit(&huart1, &count, 1, 0xFFFF);
@@ -133,7 +133,7 @@ void SystemClock_Config(void)
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 8;
@@ -159,12 +159,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
-{
-//	HAL_UART_Transmit(UartHandle,dataReceive,1,0xFFFF);
-//	if(HAL_UART_Receive_IT(&huart1, dataReceive, 1)==HAL_OK)LED3_High;
-}
-
 void HAL_SYSTICK_Callback(void)
 {
 //	if(MPU9255_Init())
