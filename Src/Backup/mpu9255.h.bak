@@ -96,8 +96,8 @@ extern int16_t MPU9255_TEMP_LAST;
 #define USER_CTRL						0X6A //用户配置 当为0X10时使用SPI模式
 
 //mpu9250 nCS
-#define SPI_MPU9255_CS_H           HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET)
-#define SPI_MPU9255_CS_L           HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET)
+#define SPI_MPU9255_CS_H           HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_SET)
+#define SPI_MPU9255_CS_L           HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_RESET)
 
 uint8_t MPU9255_Init(void);			
 uint8_t MPU9255_Read_Reg(uint8_t reg);
